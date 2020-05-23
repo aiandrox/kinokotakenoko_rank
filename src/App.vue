@@ -9,7 +9,7 @@
 <script>
 import { db } from "@/main";
 import firebase from "firebase";
-import theTop from "./pages/Top";
+import theTop from "./components/Top";
 
 export default {
   name: "App",

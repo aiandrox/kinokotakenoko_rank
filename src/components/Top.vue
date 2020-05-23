@@ -13,17 +13,18 @@
     <!-- きのこ得票数、投票ボタン v-forかな -->
     {{ user }}
     <div class="wrapper">
-      <value-data
+      <vote-btn
         :name="ranking.leftName"
         :count="ranking.leftCount"
         @vote="voteLeft"
       />
-      <value-data
+      <vote-btn
         :name="ranking.rightName"
         :count="ranking.rightCount"
         @vote="voteRight"
       />
     </div>
+    <user-vote-data :user="user" />
     <!-- 貢献者ランキング 余裕があれば -->
   </div>
 </template>
@@ -31,14 +32,16 @@
 <script>
 import { db } from "@/main";
 import firebase from "firebase";
-import theGraph from "../components/TheGraph";
-import valueData from "../components/valueData";
+import theGraph from "./TheGraph";
+import voteBtn from "./voteBtn";
+import userVoteData from "./userVoteData";
 
 export default {
   name: "Top",
   components: {
     theGraph,
-    valueData,
+    voteBtn,
+    userVoteData,
   },
   data() {
     return {
@@ -60,6 +63,12 @@ export default {
       const total = this.ranking.rightCount + this.ranking.leftCount;
       return total.toLocaleString();
     },
+    rankingRef() {
+      return db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J");
+    },
+    userRef() {
+      return db.collection("users").doc(this.user_uid);
+    },
   },
   firestore() {
     return {
@@ -68,28 +77,20 @@ export default {
   },
   methods: {
     voteLeft() {
-      db.collection("rankings")
-        .doc("Cc2ED5WYYPPDQUd6AS5J")
-        .update({
-          leftCount: this.ranking.leftCount + 1,
-        });
-      db.collection("users")
-        .doc(this.user_uid)
-        .update({
-          leftCount: firebase.firestore.FieldValue.increment(1),
-        });
+      this.rankingRef.update({
+        leftCount: firebase.firestore.FieldValue.increment(1),
+      });
+      this.userRef.update({
+        leftCount: firebase.firestore.FieldValue.increment(1),
+      });
     },
     voteRight() {
-      db.collection("rankings")
-        .doc("Cc2ED5WYYPPDQUd6AS5J")
-        .update({
-          rightCount: this.ranking.rightCount + 1,
-        });
-      db.collection("users")
-        .doc(this.user_uid)
-        .update({
-          leftCount: this.user.rightCount + 1,
-        });
+      this.rankingRef.update({
+        rightCount: firebase.firestore.FieldValue.increment(1),
+      });
+      this.userRef.update({
+        rightCount: firebase.firestore.FieldValue.increment(1),
+      });
     },
   },
 };
