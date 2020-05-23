@@ -1,13 +1,15 @@
 <template>
   <div>
-    <h1>{{ rankings[0].left_name }} vs {{ rankings[0].right_name }}</h1>
-    {{ rankings[0] }}
+    <h1>{{ ranking.leftName }} vs {{ ranking.rightName }}</h1>
+    {{ ranking }}
     <!-- 総得票数 -->
     総得票数{{ totalVote }}
     <!-- 帯グラフ -->
-    <the-graph />
+    <the-graph :ranking="ranking" />
     <!-- きのこ得票数、投票ボタン v-forかな -->
+    <button @click="voteLeft">きのこ</button>
     <!-- たけのこ得票数、投票ボタン -->
+    <button @click="voteRight">たけのこ</button>
     <!-- 貢献者ランキング 余裕があれば -->
   </div>
 </template>
@@ -23,19 +25,34 @@ export default {
   },
   data() {
     return {
-      rankings: [],
+      ranking: {},
     };
   },
   computed: {
     totalVote() {
-      return this.rankings[0].right_vote + this.rankings[0].left_vote;
+      return this.ranking.rightCount + this.ranking.leftCount;
     },
   },
   firestore() {
     return {
-      // firestoreのcommentsコレクションを参照
-      rankings: db.collection("rankings"),
+      ranking: db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J"),
     };
+  },
+  methods: {
+    voteLeft() {
+      db.collection("rankings")
+        .doc("Cc2ED5WYYPPDQUd6AS5J")
+        .update({
+          leftCount: this.ranking.leftCount + 1,
+        });
+    },
+    voteRight() {
+      db.collection("rankings")
+        .doc("Cc2ED5WYYPPDQUd6AS5J")
+        .update({
+          rightCount: this.ranking.rightCount + 1,
+        });
+    },
   },
 };
 </script>
