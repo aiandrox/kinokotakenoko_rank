@@ -4,7 +4,7 @@
       <span class="num">{{ count }}</span
       >票
     </div>
-    <button class="vote_btn" @click="voteRight">
+    <button class="vote_btn" @click="vote">
       <span>{{ name }}</span
       >に投票
     </button>
@@ -12,26 +12,14 @@
 </template>
 
 <script>
-import { db } from "@/main";
 export default {
   props: {
     name: { type: String, default: "" },
     count: { type: Number, default: 0 },
   },
   methods: {
-    voteLeft() {
-      db.collection("rankings")
-        .doc("Cc2ED5WYYPPDQUd6AS5J")
-        .update({
-          leftCount: this.ranking.leftCount + 1,
-        });
-    },
-    voteRight() {
-      db.collection("rankings")
-        .doc("Cc2ED5WYYPPDQUd6AS5J")
-        .update({
-          rightCount: this.ranking.rightCount + 1,
-        });
+    vote() {
+      this.$emit("vote");
     },
   },
 };

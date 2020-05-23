@@ -11,9 +11,18 @@
     <!-- 帯グラフ -->
     <the-graph :ranking="ranking" :totalVote="totalVote" />
     <!-- きのこ得票数、投票ボタン v-forかな -->
+    {{ user }}
     <div class="wrapper">
-      <value-data :name="ranking.leftName" :count="ranking.leftCount" />
-      <value-data :name="ranking.rightName" :count="ranking.rightCount" />
+      <value-data
+        :name="ranking.leftName"
+        :count="ranking.leftCount"
+        @vote="voteLeft"
+      />
+      <value-data
+        :name="ranking.rightName"
+        :count="ranking.rightCount"
+        @vote="voteRight"
+      />
     </div>
     <!-- 貢献者ランキング 余裕があれば -->
   </div>
