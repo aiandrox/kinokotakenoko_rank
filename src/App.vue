@@ -30,9 +30,8 @@ export default {
       });
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.user_uid = user.uid;
         const userRef = db.collection("users").doc(user.uid);
-        userRef.set({ uid: user.uid, name: "" }, { merge: true });
+        userRef.set({ uid: user.uid }, { merge: true });
         this.$bind("user", userRef);
       } else {
         console.log("No user is signed in.");

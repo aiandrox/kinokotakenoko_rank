@@ -24,8 +24,13 @@
         @vote="voteRight"
       />
     </div>
-    <user-vote-data :user="user" />
+    <user-vote-data :user="user" @push-register="registerUserName" />
     <!-- 貢献者ランキング 余裕があれば -->
+    <h2>貢献者ランキング</h2>
+    <div class="wrapper">
+      <user-left-ranking />
+      <!-- <user-ranking :users="users" /> -->
+    </div>
   </div>
 </template>
 
