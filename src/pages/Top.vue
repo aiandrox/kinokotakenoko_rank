@@ -33,7 +33,14 @@ export default {
   data() {
     return {
       ranking: {},
+      user: {},
     };
+  },
+  props: {
+    user_uid: {
+      type: String,
+      default: "",
+    },
   },
   computed: {
     totalVote() {
@@ -43,6 +50,7 @@ export default {
   },
   firestore() {
     return {
+      user: db.collection("users").doc(this.user_uid),
       ranking: db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J"),
     };
   },

@@ -1,18 +1,42 @@
 <template>
   <div id="app">
     <div id="wrapper">
-      <the-top />
+      <the-top :user_uid="user_uid" />
     </div>
   </div>
 </template>
 
 <script>
+import { db } from "@/main";
+import firebase from "firebase";
 import theTop from "./pages/Top";
 
 export default {
   name: "App",
+  data() {
+    return {
+      user_uid: "",
+    };
+  },
   components: {
     theTop,
+  },
+  async created() {
+    await firebase
+      .auth()
+      .signInAnonymously()
+      .catch(function(error) {
+        console.log(error);
+      });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user_uid = user.uid;
+        const userRef = db.collection("users").doc(user.uid);
+        userRef.set({}, { merge: true });
+      } else {
+        console.log("No user is signed in.");
+      }
+    });
   },
 };
 </script>
