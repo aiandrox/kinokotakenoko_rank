@@ -49,10 +49,6 @@ export default {
     };
   },
   props: {
-    user_uid: {
-      type: String,
-      default: "",
-    },
     user: {
       type: Object,
       default: () => {},
@@ -67,12 +63,12 @@ export default {
       return db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J");
     },
     userRef() {
-      return db.collection("users").doc(this.user_uid);
+      return db.collection("users").doc(this.user.uid);
     },
   },
   firestore() {
     return {
-      ranking: db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J"),
+      ranking: this.rankingRef,
     };
   },
   methods: {
@@ -92,27 +88,9 @@ export default {
         rightCount: firebase.firestore.FieldValue.increment(1),
       });
     },
+    registerUserName() {
+      this.userRef.update({ name: this.user.name });
+    },
   },
 };
 </script>
-
-<style scoped>
-.description {
-  margin: 2rem 0;
-  line-height: 2rem;
-}
-.emphasis {
-  font-size: 1.5rem;
-  color: #b51900;
-}
-
-.wrapper {
-  margin-top: 2rem;
-  display: flex;
-}
-span.num {
-  font-weight: bolder;
-  font-size: 3rem;
-  font-family: "Prata", serif;
-}
-</style>

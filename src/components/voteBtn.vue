@@ -25,14 +25,6 @@ export default {
 };
 </script>
 <style scoped>
-.content {
-  width: 50%;
-}
-span.num {
-  font-weight: bolder;
-  font-size: 3rem;
-  font-family: "Prata", serif;
-}
 .vote_btn {
   width: 85%;
   font-size: 1.3rem;

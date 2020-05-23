@@ -53,7 +53,7 @@ export default {
   padding: 0 10px;
 }
 .graph-body span {
-  font-size: 200%;
+  font-size: 2rem;
   font-weight: bolder;
 }
 .left {
