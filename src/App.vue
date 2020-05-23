@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <router-view />
+    <the-top />
   </div>
 </template>
 
 <script>
+import theTop from "./pages/Top";
 export default {
   name: "App",
+  components: {
+    theTop,
+  },
 };
 </script>
 

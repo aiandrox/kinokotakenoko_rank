@@ -1,13 +1,11 @@
 <template>
   <div>
-    ふぉーむ
-    <!-- フォーム2つ -->
-    <!-- 送信ボタン -->
+    グラフ
+    <!-- たけのこ、きのこ -->
+    <!-- 帯グラフ -->
   </div>
 </template>
 
 <script>
-export default {
-  name: "TheRegisterForm",
-};
+export default {};
 </script>
