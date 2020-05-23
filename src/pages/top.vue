@@ -32,9 +32,9 @@
 <script>
 import { db } from "@/main";
 import firebase from "firebase";
-import theGraph from "./TheGraph";
-import voteBtn from "./voteBtn";
-import userVoteData from "./userVoteData";
+import theGraph from "../components/theGraph";
+import voteBtn from "../components/voteBtn";
+import userVoteData from "../components/userVoteData";
 
 export default {
   name: "Top",
