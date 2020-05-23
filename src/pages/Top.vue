@@ -21,6 +21,7 @@
 
 <script>
 import { db } from "@/main";
+import firebase from "firebase";
 import theGraph from "../components/TheGraph";
 import valueData from "../components/valueData";
 
@@ -33,13 +34,16 @@ export default {
   data() {
     return {
       ranking: {},
-      user: {},
     };
   },
   props: {
     user_uid: {
       type: String,
       default: "",
+    },
+    user: {
+      type: Object,
+      default: () => {},
     },
   },
   computed: {
@@ -50,9 +54,34 @@ export default {
   },
   firestore() {
     return {
-      user: db.collection("users").doc(this.user_uid),
       ranking: db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J"),
     };
+  },
+  methods: {
+    voteLeft() {
+      db.collection("rankings")
+        .doc("Cc2ED5WYYPPDQUd6AS5J")
+        .update({
+          leftCount: this.ranking.leftCount + 1,
+        });
+      db.collection("users")
+        .doc(this.user_uid)
+        .update({
+          leftCount: firebase.firestore.FieldValue.increment(1),
+        });
+    },
+    voteRight() {
+      db.collection("rankings")
+        .doc("Cc2ED5WYYPPDQUd6AS5J")
+        .update({
+          rightCount: this.ranking.rightCount + 1,
+        });
+      db.collection("users")
+        .doc(this.user_uid)
+        .update({
+          leftCount: this.user.rightCount + 1,
+        });
+    },
   },
 };
 </script>

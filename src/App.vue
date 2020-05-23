@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="wrapper">
-      <the-top :user_uid="user_uid" />
+      <the-top :user_uid="user_uid" :user="user" />
     </div>
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       user_uid: "",
+      user: {},
     };
   },
   components: {
@@ -33,6 +34,7 @@ export default {
         this.user_uid = user.uid;
         const userRef = db.collection("users").doc(user.uid);
         userRef.set({}, { merge: true });
+        this.$bind("user", userRef);
       } else {
         console.log("No user is signed in.");
       }
