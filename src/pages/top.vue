@@ -27,8 +27,8 @@
     <!-- 貢献者ランキング -->
     <h2>貢献者ランキング</h2>
     <div class="wrapper">
-      <user-left-ranking :users="users" />
-      <user-right-ranking :users="users" />
+      <user-left-ranking />
+      <user-right-ranking />
     </div>
   </div>
 </template>
@@ -54,7 +54,6 @@ export default {
   data() {
     return {
       ranking: {},
-      users: [],
     };
   },
   props: {
@@ -78,7 +77,6 @@ export default {
   firestore() {
     return {
       ranking: this.rankingRef,
-      users: db.collection("users").orderBy("leftCount"),
     };
   },
   methods: {

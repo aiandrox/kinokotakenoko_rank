@@ -7,12 +7,21 @@
 </template>
 
 <script>
+import { db } from "@/main";
+
 export default {
-  props: {
-    users: {
-      type: Array,
-      dafault: () => [],
-    },
+  data() {
+    return {
+      users: [],
+    };
+  },
+  firestore() {
+    return {
+      users: db
+        .collection("users")
+        .orderBy("leftCount", "desc")
+        .limit(20),
+    };
   },
   methods: {
     userName(user) {
