@@ -7,22 +7,14 @@
         あなたの熱意を存分にぶつけましょう！！
       </div>
       <!-- 総得票数 -->
-      総得票数 <span class="num">{{ totalVote }}</span
+      総得票数 <span class="num">{{ totalCount }}</span
       >票
       <!-- 帯グラフ -->
-      <the-graph :ranking="ranking" :totalVote="totalVote" />
+      <the-graph :kinoko-count="kinokoCount" :takenoko-count="takenokoCount" />
       <!-- 得票数、ボタン -->
       <div class="wrapper">
-        <vote-btn
-          :name="ranking.leftName"
-          :count="ranking.leftCount"
-          @vote="voteLeft"
-        />
-        <vote-btn
-          :name="ranking.rightName"
-          :count="ranking.rightCount"
-          @vote="voteRight"
-        />
+        <vote-btn :count="kinokoCount" @vote="voteKinoko" />
+        <vote-btn :count="takenokoCount" @vote="voteTakenoko" />
       </div>
       <user-vote-data :user="currentUser" @push-register="registerUserName" />
     </div>
@@ -32,8 +24,8 @@
         <a id="rank" href="#rank" @click="isRank = !isRank">貢献者ランキング</a>
       </h2>
       <div class="wrapper" v-show="isRank">
-        <user-left-ranking />
-        <user-right-ranking />
+        <user-left-ranking :users="users" />
+        <user-right-ranking :users="users" />
       </div>
     </div>
     <!-- Twitterアイコン -->
@@ -76,20 +68,24 @@ export default {
     },
   },
   computed: {
-    totalVote() {
-      const total = this.ranking.rightCount + this.ranking.leftCount;
+    kinokoCount() {
+      return 0;
+      // this.users. leftCountの総計
+    },
+    takenokoCount() {
+      return 0;
+    },
+    totalCount() {
+      const total = this.kinokoCount + this.takenokoCount;
       return total.toLocaleString();
     },
-    rankingRef() {
-      return db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J");
-    },
-    userRef() {
+    currentUserRef() {
       return db.collection("users").doc(this.currentUser.uid);
     },
     twitterShareUrl() {
       const kinokoCount = this.currentUser.leftCount;
       const takenokoCount = this.currentUser.rightCount;
-      const situation = `現在、きのこの山${this.ranking.rightCount}票 vs たけのこの里${this.ranking.leftCount}票！`;
+      const situation = `現在、きのこの山${this.kinokoCount}票 vs たけのこの里${this.takenokoCount}票！`;
       if (kinokoCount < takenokoCount) {
         return `https://twitter.com/intent/tweet?text=${situation} 今すぐたけのこの里への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
       } else if (kinokoCount > takenokoCount) {
@@ -104,12 +100,12 @@ export default {
     };
   },
   methods: {
-    voteLeft() {
+    voteKinoko() {
       this.currentUserRef.update({
         leftCount: firebase.firestore.FieldValue.increment(1),
       });
     },
-    voteRight() {
+    voteTakenoko() {
       this.currentUserRef.update({
         rightCount: firebase.firestore.FieldValue.increment(1),
       });
@@ -124,7 +120,7 @@ export default {
 <style scoped>
 .twitter {
   position: fixed;
-  right: 50px;
+  right: 20px;
   bottom: 20px;
 }
 .twitter a {

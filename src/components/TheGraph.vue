@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="graph-wrapper">
-      <div class="graph-body left" :style="{ width: leftPer + '%' }">
+      <div class="graph-body left" :style="{ width: kinokoPer + '%' }">
         <div class="per">
-          <span>{{ leftPerRound }}</span
+          <span>{{ kinokoPerRound }}</span
           >%
         </div>
       </div>
-      <div class="graph-body right" :style="{ width: 100 - leftPer + '%' }">
+      <div class="graph-body right" :style="{ width: 100 - kinokoPer + '%' }">
         <div class="per right">
-          <span>{{ 100 - leftPerRound }}</span
+          <span>{{ 100 - kinokoPerRound }}</span
           >%
         </div>
       </div>
@@ -20,22 +20,21 @@
 <script>
 export default {
   props: {
-    ranking: {
-      rightName: "",
-      rightCount: 0,
-      leftName: "",
-      leftCount: 0,
+    kinokoCount: {
+      type: Number,
+      defalut: 0,
+    },
+    takenokoCount: {
+      type: Number,
+      default: 0,
     },
   },
   computed: {
-    leftPer() {
-      return (
-        (this.ranking.leftCount * 100) /
-        (this.ranking.leftCount + this.ranking.rightCount)
-      );
+    kinokoPer() {
+      return (this.kinokoCount * 100) / (this.kinokoCount + this.takenokoCount);
     },
-    leftPerRound() {
-      return Math.round(this.leftPer * 10) / 10;
+    kinokoPerRound() {
+      return Math.round(this.kinokoPer * 10) / 10;
     },
   },
 };
