@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div id="wrapper">
-      <the-top :user="user" />
-    </div>
+    <the-top :user="user" />
   </div>
 </template>
 
@@ -49,8 +47,23 @@ export default {
   text-align: center;
   padding-top: 60px;
   color: #1f1400;
+}
+#vote-zone {
+  max-width: 700px;
+  width: 100%;
   margin: 0 auto;
-  width: 700px;
+}
+#ranking {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+.wrapper {
+  margin-top: 2rem;
+  display: flex;
+}
+h2 {
+  margin-top: 2rem;
 }
 .content {
   width: 50%;
@@ -62,11 +75,6 @@ export default {
 .emphasis {
   font-size: 1.5rem;
   color: #b51900;
-}
-
-.wrapper {
-  margin-top: 2rem;
-  display: flex;
 }
 span.num {
   font-weight: bolder;

@@ -1,34 +1,40 @@
 <template>
   <div>
-    <h1>{{ ranking.leftName }} vs {{ ranking.rightName }}</h1>
-    <div class="description">
-      この人気投票は<span class="emphasis">投票し放題</span>です！<br />
-      あなたの熱意を存分にぶつけましょう！！
+    <div id="vote-zone">
+      <h1>{{ ranking.leftName }} vs {{ ranking.rightName }}</h1>
+      <div class="description">
+        この人気投票は<span class="emphasis">投票し放題</span>です！<br />
+        あなたの熱意を存分にぶつけましょう！！
+      </div>
+      <!-- 総得票数 -->
+      総得票数 <span class="num">{{ totalVote }}</span
+      >票
+      <!-- 帯グラフ -->
+      <the-graph :ranking="ranking" :totalVote="totalVote" />
+      <!-- 得票数、ボタン -->
+      <div class="wrapper">
+        <vote-btn
+          :name="ranking.leftName"
+          :count="ranking.leftCount"
+          @vote="voteLeft"
+        />
+        <vote-btn
+          :name="ranking.rightName"
+          :count="ranking.rightCount"
+          @vote="voteRight"
+        />
+      </div>
+      <user-vote-data :user="user" @push-register="registerUserName" />
     </div>
-    <!-- 総得票数 -->
-    総得票数 <span class="num">{{ totalVote }}</span
-    >票
-    <!-- 帯グラフ -->
-    <the-graph :ranking="ranking" :totalVote="totalVote" />
-    <!-- 得票数、ボタン -->
-    <div class="wrapper">
-      <vote-btn
-        :name="ranking.leftName"
-        :count="ranking.leftCount"
-        @vote="voteLeft"
-      />
-      <vote-btn
-        :name="ranking.rightName"
-        :count="ranking.rightCount"
-        @vote="voteRight"
-      />
-    </div>
-    <user-vote-data :user="user" @push-register="registerUserName" />
     <!-- 貢献者ランキング -->
-    <h2>貢献者ランキング</h2>
-    <div class="wrapper">
-      <user-left-ranking />
-      <user-right-ranking />
+    <div id="ranking">
+      <h2>
+        <a id="rank" href="#rank" @click="isRank = !isRank">貢献者ランキング</a>
+      </h2>
+      <div class="wrapper" v-show="isRank">
+        <user-left-ranking />
+        <user-right-ranking />
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +60,7 @@ export default {
   data() {
     return {
       ranking: {},
+      isRank: false,
     };
   },
   props: {
