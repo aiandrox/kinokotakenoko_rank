@@ -4,7 +4,6 @@ service cloud.firestore {
 
     match /users/{userID} {
       allow read: if request.auth.uid != null;
-      allow read, update: if request.auth.uid == userId;
     }
     match /rankings/{rankingID}{
       allow read, write: if request.auth.uid != null;
