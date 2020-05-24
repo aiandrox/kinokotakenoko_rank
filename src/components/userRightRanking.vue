@@ -1,18 +1,37 @@
 <template>
-  <div class="content">
-    <div v-for="user in users" :key="user.uid">
-      {{ userName(user) }} {{ count(user) }}票
-    </div>
-  </div>
+  <table class="content">
+    <tr v-for="(user, index) in users" :key="index">
+      <td>
+        <span class="num" :style="{ fontSize: fontSize(index) }">{{
+          index + 1
+        }}</span
+        >位
+      </td>
+      <td class="name">{{ userName(user) }}</td>
+      <td>
+        <span class="num">{{ count(user) }}</span
+        >票
+      </td>
+    </tr>
+  </table>
 </template>
 
 <script>
+import { db } from "@/main";
+
 export default {
-  props: {
-    users: {
-      type: Array,
-      dafault: () => [],
-    },
+  data() {
+    return {
+      users: [],
+    };
+  },
+  firestore() {
+    return {
+      users: db
+        .collection("users")
+        .orderBy("rightCount", "desc")
+        .limit(20),
+    };
   },
   methods: {
     userName(user) {
@@ -27,6 +46,30 @@ export default {
       }
       return 0;
     },
+    fontSize(index) {
+      if (index < 3) {
+        return 50 - index * 5 + "px";
+      }
+      return "1.8rem";
+    },
   },
 };
 </script>
+
+<style scoped>
+table {
+  width: 100%;
+  text-align: right;
+  font-size: 1.1rem;
+}
+table td {
+  padding: 0.2rem;
+}
+table td.name {
+  text-align: left;
+  width: 50%;
+}
+span.num {
+  font-size: 1.5rem;
+}
+</style>
