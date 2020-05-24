@@ -55,7 +55,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  padding-top: 50px;
+  padding-top: 40px;
   color: #0f0e17;
 }
 #vote-zone {
@@ -79,7 +79,7 @@ h2 {
   width: 50%;
 }
 .description {
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   line-height: 2rem;
 }
 .emphasis {
@@ -91,7 +91,6 @@ span.num {
   font-size: 3rem;
   font-family: "Prata", serif;
 }
-
 a {
   color: #2a524d;
 }

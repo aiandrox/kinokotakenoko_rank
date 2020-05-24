@@ -25,7 +25,7 @@ export default {
 };
 </script>
 <style scoped>
-.vote_btn {
+button.vote_btn {
   width: 85%;
   font-size: 1.3rem;
   font-weight: bold;
@@ -38,7 +38,7 @@ export default {
   padding: 10px;
   cursor: pointer;
 }
-.vote_btn:active {
+button.vote_btn:active {
   -webkit-transform: translateY(2px);
   transform: translateY(2px); /*下に動く*/
   border-bottom: none; /*線を消す*/
