@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="graph-body right" :style="{ width: 100 - leftPer + '%' }">
-        <div class="per">
+        <div class="per right">
           <span>{{ 100 - leftPerRound }}</span
           >%
         </div>
@@ -51,6 +51,14 @@ export default {
 .graph-body {
   height: 100%;
   padding: 0 10px;
+  position: relative;
+}
+.per {
+  position: absolute;
+  bottom: 0;
+}
+.per.right {
+  right: 10px;
 }
 .graph-body span {
   font-size: 2rem;
