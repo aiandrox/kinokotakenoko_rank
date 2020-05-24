@@ -91,9 +91,9 @@ export default {
       const takenoko = this.user.rightCount;
       const situation = `現在、きのこの山${this.ranking.rightCount}票 vs たけのこの里${this.ranking.leftCount}票！`;
       if (kinoko < takenoko) {
-        return `https://twitter.com/intent/tweet?text=${situation} 今すぐ${takenoko}への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
+        return `https://twitter.com/intent/tweet?text=${situation} 今すぐたけのこの里への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
       } else if (kinoko > takenoko) {
-        return `https://twitter.com/intent/tweet?text=${situation} 今すぐ${kinoko}への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
+        return `https://twitter.com/intent/tweet?text=${situation} 今すぐきのこの山への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
       }
       return `https://twitter.com/intent/tweet?text=${situation} あなたも今すぐ投票しよう！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
     },
