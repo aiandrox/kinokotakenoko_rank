@@ -75,6 +75,7 @@ export default {
   firestore() {
     return {
       ranking: this.rankingRef,
+      users: db.collection("users").orderBy("leftCount"),
     };
   },
   methods: {
