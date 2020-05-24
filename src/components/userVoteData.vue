@@ -102,13 +102,15 @@ button {
   width: 130px;
   text-align: center;
   border: 2px solid #2a524d;
-  font-size: 16px;
+  font-size: 1rem;
   color: #2a524d;
   text-decoration: none;
   font-weight: bold;
   margin-top: 2px;
   padding: 5px 0;
   border-radius: 20px;
+  cursor: pointer;
+  cursor: hand;
 }
 
 button:hover {

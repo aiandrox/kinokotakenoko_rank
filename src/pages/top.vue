@@ -36,6 +36,12 @@
         <user-right-ranking />
       </div>
     </div>
+    <!-- Twitterアイコン -->
+    <div class="twitter">
+      <a :href="twitterShareUrl" rel="”nofollow”" target="_blank"
+        >Twiiterで呼びかける</a
+      >
+    </div>
   </div>
 </template>
 
@@ -80,6 +86,17 @@ export default {
     userRef() {
       return db.collection("users").doc(this.user.uid);
     },
+    twitterShareUrl() {
+      const kinoko = this.user.leftCount;
+      const takenoko = this.user.rightCount;
+      const situation = `現在、きのこの山${this.ranking.rightCount}票 vs たけのこの里${this.ranking.leftCount}票！`;
+      if (kinoko < takenoko) {
+        return `https://twitter.com/intent/tweet?text=${situation} 今すぐ${takenoko}への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
+      } else if (kinoko > takenoko) {
+        return `https://twitter.com/intent/tweet?text=${situation} 今すぐ${kinoko}への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
+      }
+      return `https://twitter.com/intent/tweet?text=${situation} あなたも今すぐ投票しよう！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
+    },
   },
   firestore() {
     return {
@@ -109,3 +126,26 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.twitter {
+  position: fixed;
+  right: 50px;
+  bottom: 20px;
+}
+.twitter a {
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid #59c2f0;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #59c2f0;
+}
+.twitter a:hover {
+  color: #4bacd6;
+  background-color: #fff;
+}
+</style>
