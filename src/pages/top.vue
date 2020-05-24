@@ -27,8 +27,8 @@
     <!-- 貢献者ランキング -->
     <h2>貢献者ランキング</h2>
     <div class="wrapper">
-      <user-left-ranking />
-      <!-- <user-ranking :users="users" /> -->
+      <user-left-ranking :users="users" />
+      <user-right-ranking :users="users" />
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@ import theGraph from "../components/theGraph";
 import voteBtn from "../components/voteBtn";
 import userVoteData from "../components/userVoteData";
 import userLeftRanking from "../components/userLeftRanking";
+import userRightRanking from "../components/userRightRanking";
 
 export default {
   name: "Top",
@@ -48,10 +49,12 @@ export default {
     voteBtn,
     userVoteData,
     userLeftRanking,
+    userRightRanking,
   },
   data() {
     return {
       ranking: {},
+      users: [],
     };
   },
   props: {
