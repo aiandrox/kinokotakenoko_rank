@@ -89,7 +89,7 @@ export default {
     twitterShareUrl() {
       const kinoko = this.user.leftCount;
       const takenoko = this.user.rightCount;
-      const situation = `現在、きのこの山${kinoko}票 vs たけのこの里${takenoko}票！`;
+      const situation = `現在、きのこの山${this.ranking.lefttCount}票 vs たけのこの里${this.ranking.rightCount}票！`;
       if (kinoko < takenoko) {
         return `https://twitter.com/intent/tweet?text=${situation} 今すぐたけのこの里への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
       } else if (kinoko > takenoko) {
