@@ -6,7 +6,11 @@
       color="#2a524d"
       :size="{ width: '50px', height: '50px' }"
     />
-    <the-top v-show="!isLoading" :user="user" @mounted="isLoading = false" />
+    <the-top
+      v-show="!isLoading"
+      :currentUser="currentUser"
+      @mounted="isLoading = false"
+    />
   </div>
 </template>
 
@@ -21,7 +25,7 @@ export default {
   data() {
     return {
       isLoading: true,
-      user: {},
+      currentUser: {},
     };
   },
   components: {
@@ -39,7 +43,7 @@ export default {
       if (user) {
         const userRef = db.collection("users").doc(user.uid);
         userRef.set({ uid: user.uid }, { merge: true });
-        this.$bind("user", userRef);
+        this.$bind("currentUser", userRef);
       } else {
         console.log("No user is signed in.");
       }

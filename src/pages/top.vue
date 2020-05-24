@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="vote-zone">
-      <h1>{{ ranking.leftName }} vs {{ ranking.rightName }}</h1>
+      <h1>きのこの山 vs たけのこの里</h1>
       <div class="description">
         この人気投票は<span class="emphasis">投票し放題</span>です！<br />
         あなたの熱意を存分にぶつけましょう！！
@@ -24,7 +24,7 @@
           @vote="voteRight"
         />
       </div>
-      <user-vote-data :user="user" @push-register="registerUserName" />
+      <user-vote-data :user="currentUser" @push-register="registerUserName" />
     </div>
     <!-- 貢献者ランキング -->
     <div id="ranking">
@@ -65,12 +65,12 @@ export default {
   },
   data() {
     return {
-      ranking: {},
       isRank: false,
+      users: [],
     };
   },
   props: {
-    user: {
+    currnetUser: {
       type: Object,
       default: () => {},
     },
@@ -84,15 +84,15 @@ export default {
       return db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J");
     },
     userRef() {
-      return db.collection("users").doc(this.user.uid);
+      return db.collection("users").doc(this.currentUser.uid);
     },
     twitterShareUrl() {
-      const kinoko = this.user.leftCount;
-      const takenoko = this.user.rightCount;
+      const kinokoCount = this.currentUser.leftCount;
+      const takenokoCount = this.currentUser.rightCount;
       const situation = `現在、きのこの山${this.ranking.rightCount}票 vs たけのこの里${this.ranking.leftCount}票！`;
-      if (kinoko < takenoko) {
+      if (kinokoCount < takenokoCount) {
         return `https://twitter.com/intent/tweet?text=${situation} 今すぐたけのこの里への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
-      } else if (kinoko > takenoko) {
+      } else if (kinokoCount > takenokoCount) {
         return `https://twitter.com/intent/tweet?text=${situation} 今すぐきのこの山への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
       }
       return `https://twitter.com/intent/tweet?text=${situation} あなたも今すぐ投票しよう！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
@@ -100,28 +100,22 @@ export default {
   },
   firestore() {
     return {
-      ranking: this.rankingRef,
+      users: db.collection("users"),
     };
   },
   methods: {
     voteLeft() {
-      this.rankingRef.update({
-        leftCount: firebase.firestore.FieldValue.increment(1),
-      });
-      this.userRef.update({
+      this.currentUserRef.update({
         leftCount: firebase.firestore.FieldValue.increment(1),
       });
     },
     voteRight() {
-      this.rankingRef.update({
-        rightCount: firebase.firestore.FieldValue.increment(1),
-      });
-      this.userRef.update({
+      this.currentUserRef.update({
         rightCount: firebase.firestore.FieldValue.increment(1),
       });
     },
     registerUserName() {
-      this.userRef.update({ name: this.user.name });
+      this.currentUserRef.update({ name: this.currentUser.name });
     },
   },
 };
