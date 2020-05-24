@@ -46,7 +46,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   padding-top: 60px;
-  color: #1f1400;
+  color: #0f0e17;
 }
 #vote-zone {
   max-width: 700px;
@@ -63,7 +63,7 @@ export default {
   display: flex;
 }
 h2 {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 .content {
   width: 50%;
@@ -80,5 +80,12 @@ span.num {
   font-weight: bolder;
   font-size: 3rem;
   font-family: "Prata", serif;
+}
+
+a {
+  color: #2a524d;
+}
+a:hover {
+  color: #408078;
 }
 </style>
