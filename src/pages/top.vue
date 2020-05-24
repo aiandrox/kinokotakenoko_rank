@@ -1,0 +1,106 @@
+<template>
+  <div>
+    <h1>{{ ranking.leftName }} vs {{ ranking.rightName }}</h1>
+    <div class="description">
+      この人気投票は<span class="emphasis">投票し放題</span>です！<br />
+      あなたの熱意を存分にぶつけましょう！！
+    </div>
+    <!-- 総得票数 -->
+    総得票数 <span class="num">{{ totalVote }}</span
+    >票
+    <!-- 帯グラフ -->
+    <the-graph :ranking="ranking" :totalVote="totalVote" />
+    <!-- 得票数、ボタン -->
+    <div class="wrapper">
+      <vote-btn
+        :name="ranking.leftName"
+        :count="ranking.leftCount"
+        @vote="voteLeft"
+      />
+      <vote-btn
+        :name="ranking.rightName"
+        :count="ranking.rightCount"
+        @vote="voteRight"
+      />
+    </div>
+    <user-vote-data :user="user" @push-register="registerUserName" />
+    <!-- 貢献者ランキング -->
+    <h2>貢献者ランキング</h2>
+    <div class="wrapper">
+      <user-left-ranking :users="users" />
+      <user-right-ranking :users="users" />
+    </div>
+  </div>
+</template>
+
+<script>
+import { db } from "@/main";
+import firebase from "firebase";
+import theGraph from "../components/theGraph";
+import voteBtn from "../components/voteBtn";
+import userVoteData from "../components/userVoteData";
+import userLeftRanking from "../components/userLeftRanking";
+import userRightRanking from "../components/userRightRanking";
+
+export default {
+  name: "Top",
+  components: {
+    theGraph,
+    voteBtn,
+    userVoteData,
+    userLeftRanking,
+    userRightRanking,
+  },
+  data() {
+    return {
+      ranking: {},
+      users: [],
+    };
+  },
+  props: {
+    user: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    totalVote() {
+      const total = this.ranking.rightCount + this.ranking.leftCount;
+      return total.toLocaleString();
+    },
+    rankingRef() {
+      return db.collection("rankings").doc("Cc2ED5WYYPPDQUd6AS5J");
+    },
+    userRef() {
+      return db.collection("users").doc(this.user.uid);
+    },
+  },
+  firestore() {
+    return {
+      ranking: this.rankingRef,
+      users: db.collection("users").orderBy("leftCount"),
+    };
+  },
+  methods: {
+    voteLeft() {
+      this.rankingRef.update({
+        leftCount: firebase.firestore.FieldValue.increment(1),
+      });
+      this.userRef.update({
+        leftCount: firebase.firestore.FieldValue.increment(1),
+      });
+    },
+    voteRight() {
+      this.rankingRef.update({
+        rightCount: firebase.firestore.FieldValue.increment(1),
+      });
+      this.userRef.update({
+        rightCount: firebase.firestore.FieldValue.increment(1),
+      });
+    },
+    registerUserName() {
+      this.userRef.update({ name: this.user.name });
+    },
+  },
+};
+</script>
