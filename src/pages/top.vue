@@ -10,8 +10,7 @@
     >票
     <!-- 帯グラフ -->
     <the-graph :ranking="ranking" :totalVote="totalVote" />
-    <!-- きのこ得票数、投票ボタン v-forかな -->
-    {{ user }}
+    <!-- 得票数、ボタン -->
     <div class="wrapper">
       <vote-btn
         :name="ranking.leftName"
@@ -25,7 +24,7 @@
       />
     </div>
     <user-vote-data :user="user" @push-register="registerUserName" />
-    <!-- 貢献者ランキング 余裕があれば -->
+    <!-- 貢献者ランキング -->
     <h2>貢献者ランキング</h2>
     <div class="wrapper">
       <user-left-ranking />
@@ -40,6 +39,7 @@ import firebase from "firebase";
 import theGraph from "../components/theGraph";
 import voteBtn from "../components/voteBtn";
 import userVoteData from "../components/userVoteData";
+import userLeftRanking from "../components/userLeftRanking";
 
 export default {
   name: "Top",
@@ -47,6 +47,7 @@ export default {
     theGraph,
     voteBtn,
     userVoteData,
+    userLeftRanking,
   },
   data() {
     return {
