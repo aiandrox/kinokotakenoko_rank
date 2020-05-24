@@ -66,10 +66,10 @@ export default {
 }
 .left {
   text-align: left;
-  background-color: #ffe53b;
+  background-color: #fce449;
 }
 .right {
   text-align: right;
-  background-color: #d1f558;
+  background-color: #c8ee4b;
 }
 </style>
