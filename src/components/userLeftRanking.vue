@@ -10,7 +10,7 @@
       </td>
       <td class="name">{{ userName(user) }}</td>
       <td>
-        <span class="num">{{ count(user) }}</span>票
+        <span class="num">{{ count(user).toLocaleString() }}</span>票
       </td>
     </tr>
   </table>

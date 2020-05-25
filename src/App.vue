@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    {{ currentUser }}
     <vue-loading
       v-if="isLoading"
       type="spiningDubbles"
       color="#2a524d"
       :size="{ width: '50px', height: '50px' }"
     />
-    <the-top
-      v-show="!isLoading"
-      :current-user="currentUser"
-      @mounted="isLoading = false"
-    />
+    <the-top v-show="!isLoading" :current-user="currentUser" @mounted="isLoading = false" />
   </div>
 </template>
 
@@ -26,12 +21,12 @@ export default {
   data() {
     return {
       isLoading: true,
-      currentUser: { test: "aaa" },
+      currentUser: { name: "名無しさん" }
     };
   },
   components: {
     VueLoading,
-    theTop,
+    theTop
   },
   async created() {
     await firebase
@@ -40,14 +35,14 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
-    await firebase.auth().onAuthStateChanged((user) => {
+    await firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const userRef = db.collection("users").doc(user.uid);
         userRef.set(
           {
             uid: user.uid,
             rightCount: firebase.firestore.FieldValue.increment(0),
-            leftCount: firebase.firestore.FieldValue.increment(0),
+            leftCount: firebase.firestore.FieldValue.increment(0)
           },
           { merge: true }
         );
@@ -57,7 +52,7 @@ export default {
       }
       this.isLoading = false;
     });
-  },
+  }
 };
 </script>
 
