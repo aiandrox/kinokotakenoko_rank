@@ -2,6 +2,8 @@
   <div>
     <div id="vote-zone">
       <h1>{{ ranking.leftName }} vs {{ ranking.rightName }}</h1>
+
+      <h2>すみません、調整中です！！</h2>
       <div class="description">
         この人気投票は<span class="emphasis">投票し放題</span>です！<br />
         あなたの熱意を存分にぶつけましょう！！
