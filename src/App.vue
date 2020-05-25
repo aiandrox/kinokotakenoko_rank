@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    {{ currentUser }}
     <vue-loading
       v-if="isLoading"
       type="spiningDubbles"
@@ -8,7 +9,7 @@
     />
     <the-top
       v-show="!isLoading"
-      :currentUser="currentUser"
+      :current-user="currentUser"
       @mounted="isLoading = false"
     />
   </div>
@@ -25,7 +26,7 @@ export default {
   data() {
     return {
       isLoading: true,
-      currentUser: {},
+      currentUser: { test: "aaa" },
     };
   },
   components: {
@@ -42,7 +43,14 @@ export default {
     await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const userRef = db.collection("users").doc(user.uid);
-        userRef.set({ uid: user.uid }, { merge: true });
+        userRef.set(
+          {
+            uid: user.uid,
+            rightCount: firebase.firestore.FieldValue.increment(0),
+            leftCount: firebase.firestore.FieldValue.increment(0),
+          },
+          { merge: true }
+        );
         this.$bind("currentUser", userRef);
       } else {
         console.log("No user is signed in.");
