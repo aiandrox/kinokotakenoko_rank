@@ -1,39 +1,39 @@
 <template>
   <table class="content">
-    <tr v-for="(user, index) in users" :key="index">
+    <tr v-for="(user, index) in sorted(users)" :key="index">
       <td>
-        <span class="num" :style="{ fontSize: fontSize(index) }">{{
+        <span class="num" :style="{ fontSize: fontSize(index) }">
+          {{
           index + 1
-        }}</span
-        >位
+          }}
+        </span>位
       </td>
       <td class="name">{{ userName(user) }}</td>
       <td>
-        <span class="num">{{ count(user) }}</span
-        >票
+        <span class="num">{{ count(user) }}</span>票
       </td>
     </tr>
   </table>
 </template>
 
 <script>
-import { db } from "@/main";
-
 export default {
-  data() {
-    return {
-      users: [],
-    };
-  },
-  firestore() {
-    return {
-      users: db
-        .collection("users")
-        .orderBy("rightCount", "desc")
-        .limit(20),
-    };
+  props: {
+    users: {
+      type: Array,
+      default: () => []
+    }
   },
   methods: {
+    sorted(users) {
+      return users
+        .sort(function(a, b) {
+          if (a.rightCount > b.rightCount) return -1;
+          if (a.rightCount < b.rightCount) return 1;
+          return 0;
+        })
+        .slice(0, 20);
+    },
     userName(user) {
       if (user.name) {
         return user.name;
@@ -51,8 +51,8 @@ export default {
         return 50 - index * 5 + "px";
       }
       return "1.8rem";
-    },
-  },
+    }
+  }
 };
 </script>
 
