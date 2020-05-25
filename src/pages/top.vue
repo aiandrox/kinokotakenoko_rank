@@ -9,13 +9,22 @@
       </div>
       <!-- 総得票数 -->
       総得票数
-      <span class="num">{{ totalCount }}</span>票
+      <span class="num">{{ totalCount }}</span
+      >票
       <!-- 帯グラフ -->
       <the-graph :kinoko-count="kinokoCount" :takenoko-count="takenokoCount" />
       <!-- 得票数、ボタン -->
       <div class="wrapper">
-        <vote-btn name="きのこの山" :count="kinokoCount.toLocaleString()" @vote="voteKinoko" />
-        <vote-btn name="たけのこの里" :count="takenokoCount.toLocaleString()" @vote="voteTakenoko" />
+        <vote-btn
+          name="きのこの山"
+          :count="kinokoCount.toLocaleString()"
+          @vote="voteKinoko"
+        />
+        <vote-btn
+          name="たけのこの里"
+          :count="takenokoCount.toLocaleString()"
+          @vote="voteTakenoko"
+        />
       </div>
       <user-vote-data :user="currentUser" @push-register="registerUserName" />
     </div>
@@ -31,7 +40,9 @@
     </div>
     <!-- Twitterアイコン -->
     <div class="twitter">
-      <a :href="twitterShareUrl" rel="”nofollow”" target="_blank">Twiiterで呼びかける</a>
+      <a :href="twitterShareUrl" rel="”nofollow”" target="_blank"
+        >Twiiterで呼びかける</a
+      >
     </div>
   </div>
 </template>
@@ -51,19 +62,19 @@ export default {
     voteBtn,
     userVoteData,
     userLeftRanking,
-    userRightRanking
+    userRightRanking,
   },
   data() {
     return {
       isRank: false,
-      users: []
+      users: [],
     };
   },
   props: {
     currentUser: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   computed: {
     kinokoCount() {
@@ -99,28 +110,28 @@ export default {
         return `https://twitter.com/intent/tweet?text=${situation} 今すぐきのこの山への投票を手伝って！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
       }
       return `https://twitter.com/intent/tweet?text=${situation} あなたも今すぐ投票しよう！！&url=https://like-ranking.web.app/&hashtags=web1week,きのこたけのこ人気投票`;
-    }
+    },
   },
   firestore() {
     return {
-      users: db.collection("users")
+      users: db.collection("users"),
     };
   },
   methods: {
     voteKinoko() {
       this.currentUserRef.update({
-        leftCount: firebase.firestore.FieldValue.increment(1)
+        leftCount: firebase.firestore.FieldValue.increment(1),
       });
     },
     voteTakenoko() {
       this.currentUserRef.update({
-        rightCount: firebase.firestore.FieldValue.increment(1)
+        rightCount: firebase.firestore.FieldValue.increment(1),
       });
     },
     registerUserName() {
       this.currentUserRef.update({ name: this.currentUser.name });
-    }
-  }
+    },
+  },
 };
 </script>
 
