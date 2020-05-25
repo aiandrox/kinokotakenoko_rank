@@ -47,7 +47,6 @@ import userLeftRanking from "../components/userLeftRanking";
 import userRightRanking from "../components/userRightRanking";
 
 export default {
-  name: "Top",
   components: {
     theGraph,
     voteBtn,
@@ -62,18 +61,27 @@ export default {
     };
   },
   props: {
-    currnetUser: {
+    currentUser: {
       type: Object,
       default: () => {},
     },
   },
   computed: {
     kinokoCount() {
-      return 0;
-      // this.users. leftCountの総計
+      const users = this.users;
+      let count = 0;
+      for (let index in users) {
+        if (users[index].leftCount) count += users[index].leftCount;
+      }
+      return count;
     },
     takenokoCount() {
-      return 0;
+      const users = this.users;
+      let count = 0;
+      for (let index in users) {
+        if (users[index].rightCount) count += users[index].rightCount;
+      }
+      return count;
     },
     totalCount() {
       const total = this.kinokoCount + this.takenokoCount;
