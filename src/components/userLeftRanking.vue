@@ -27,6 +27,7 @@ export default {
   methods: {
     sorted(users) {
       return users
+        .slice()
         .sort(function(a, b) {
           if (a.leftCount > b.leftCount) return -1;
           if (a.leftCount < b.leftCount) return 1;
