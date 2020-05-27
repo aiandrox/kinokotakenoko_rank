@@ -1,24 +1,27 @@
-# like_ranking
+# きのこたけのこ人気投票
 
-## Project setup
-```
-yarn install
-```
+1 週間で web サービスを作る web1week というオンラインハッカソンの提出作品です。
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+アプリページ  
+https://like-ranking.web.app/
 
-### Compiles and minifies for production
-```
-yarn build
-```
+![プレビュー](./discription.png)
 
-### Lints and fixes files
-```
-yarn lint
-```
+## あなたの熱意が票になる。
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+あなたは好きなだけ投票することができます。  
+あなたの頑張りがそのまま票に反映されます。  
+あなたの成果はランキングで可視化されます。  
+あなたと共に戦う仲間やライバルが見えます。
+
+## 使用技術など
+
+- HTML
+- CSS
+- Vue.js(Vue-cli)
+- Firebase
+  - Firestore
+  - Authentication
+  - Hosting
+
+制作過程や感想、課題などは[Qiita の記事](https://qiita.com/aiandrox/items/bc5f45d72c33eb2ecd69)にまとめています。
