@@ -1,16 +1,14 @@
 <template>
   <div>
     <div class="graph-wrapper">
-      <div class="graph-body left" :style="{ width: kinokoPer + '%' }">
+      <div class="graph-body left" :style="{ width: 100 -takenokoPer + '%' }">
         <div class="per">
-          <span>{{ kinokoPerRound }}</span
-          >%
+          <span>{{ 100 - takenokoPerRound }}</span>%
         </div>
       </div>
-      <div class="graph-body right" :style="{ width: 100 - kinokoPer + '%' }">
+      <div class="graph-body right" :style="{ width: takenokoPer + '%' }">
         <div class="per right">
-          <span>{{ 100 - kinokoPerRound }}</span
-          >%
+          <span>{{ takenokoPerRound }}</span>%
         </div>
       </div>
     </div>
@@ -22,21 +20,23 @@ export default {
   props: {
     kinokoCount: {
       type: Number,
-      defalut: 0,
+      defalut: 0
     },
     takenokoCount: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
   computed: {
-    kinokoPer() {
-      return (this.kinokoCount * 100) / (this.kinokoCount + this.takenokoCount);
+    takenokoPer() {
+      return (
+        (this.takenokoCount * 100) / (this.kinokoCount + this.takenokoCount)
+      );
     },
-    kinokoPerRound() {
-      return Math.round(this.kinokoPer * 10) / 10;
-    },
-  },
+    takenokoPerRound() {
+      return Math.round(this.takenokoPer * 10) / 10;
+    }
+  }
 };
 </script>
 <style scoped>
